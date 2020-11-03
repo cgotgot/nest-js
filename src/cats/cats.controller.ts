@@ -4,7 +4,7 @@ import { HttpExceptionFilter } from 'src/http-exception.filter';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { Cat } from './interfaces/cat.interface';
-import { JoiValidationPipe } from '../joi-validation-pipe';
+//import { JoiValidationPipe } from '../joi-validation.pipe';
 import { RolesGuard } from 'src/roles.guard';
 import { Roles } from 'src/roles.decorator';
 import { LoggingInterceptor } from 'src/logging.interceptor';
