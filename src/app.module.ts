@@ -1,26 +1,22 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Connection } from 'typeorm';
-import { UsersModule } from './users/users.module';
-import { User } from './users/user.entity';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
+import * as Joi from '@hapi/joi';
 
 @Module({
   imports: [
-    UsersModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'test',
-      entities: [User],
-      synchronize: true,
-      autoLoadEntities: true
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string()
+          .valid('development', 'production', 'test', 'provision')
+          .default('development'),
+        PORT: Joi.number().default(3000),
+      }),
+      validationOptions: {
+        allowUnknown: false,
+        abortEarly: true,
+      },
     }),
   ],
 })
-
-export class AppModule {
-  constructor(private connection: Connection) {}
-}
+export class AppModule {}
